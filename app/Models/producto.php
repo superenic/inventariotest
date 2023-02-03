@@ -11,4 +11,8 @@ class Producto extends Model
 
     const NAME_TABLE = 'productos';
     const ESTADO_VALIDO = ['con inventario', 'sin inventario'];
+
+    public function categorias() {
+        return $this->belongsToMany(Categoria::class, 'categoria_producto', 'producto_id', 'categoria_id');
+    }
 }

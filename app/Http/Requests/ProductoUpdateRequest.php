@@ -28,11 +28,9 @@ class ProductoUpdateRequest extends FormRequest
         return [
             'sku' => ['required'],
             'nombre' => ['required'],
-            'categoria_id' => ['required'], // exists:producto,producto_id
             'descripcion' => ['required'],
-            'precio' => ['required|decimal:8,2'],
-            'cantidad' => ['required|numeric'],
-            'estado' => ['required', Rule::in(Producto::ESTADO_VALIDO)],
+            'precio' => ['required'],
+            'cantidad' => ['required'],
         ];
     }
 }

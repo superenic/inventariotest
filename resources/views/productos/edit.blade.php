@@ -22,9 +22,9 @@
         </div>
     @endif
     </div> 
-    <form action="{{route('productos.update', [$producto->id])}}" method="PUT">
+    <form action="{{route('productos.update', [$producto->id])}}" method="POST">
         @csrf
-        @method('PUT')
+        {{ method_field('PATCH') }}
         <div class="mb-3">
         <label name="skue" class="form-label">sku</label>
         <input type="text" class="form-control" name="sku"  value="{{old('sku', $producto->sku)}}">
@@ -63,8 +63,7 @@
                 @endfor
         </select>
         </div>
-
-        <button class="btn btn-success">enviar</button>
+        <input type="submit" value="enviar">
     </form>
     @if(session()->has('message'))
         <div class="alert alert-success">

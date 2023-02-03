@@ -28,7 +28,6 @@ class ProductoStoreRequest extends FormRequest
         return [
             'sku' => ['required'],
             'nombre' => ['required'],
-            'categoria_id' => ['required'], // exists:producto,producto_id
             'descripción' => ['required'],
             'precio' => ['required|decimal:8,2'],
             'cantidad' => ['required|numeric'],

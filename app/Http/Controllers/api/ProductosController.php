@@ -4,6 +4,8 @@ namespace App\Http\Controllers\api;
 
 use App\Models\Producto;
 use Illuminate\Http\Request;
+use App\Models\CategoriaProducto;
+use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\ProductoStoreRequest;
 use App\Http\Requests\ProductoUpdateRequest;
@@ -42,15 +44,35 @@ class ProductosController extends Controller
         $data = $request->only([
             'sku',
             'nombre',
-            'categoria_id',
             'descripcion',
             'precio',
             'cantidad',
-            'estado',
+            'calificacion',
         ]);
         $Producto = new Producto();
-        $Producto->fill($data);
-        $Producto->saveOrFail();
+        $Producto->sku = $data['sku'];
+        $Producto->nombre = $data['nombre'];
+        $Producto->descripcion = $data['descripcion'];
+        $Producto->precio = $data['precio'];
+        $Producto->cantidad = $data['cantidad'];
+        if ($Producto->cantidad <= 0) {
+            $Producto->estado = Producto::ESTADO_VALIDO[1];
+        } else {
+            $Producto->estado = Producto::ESTADO_VALIDO[0];
+        }
+        $Producto->calificacion = $data['calificacion'];
+        $categoria_id = $request->get('categoria_id');
+ 
+        DB::transaction(function () use ($Producto, $categoria_id) {
+            $Producto->saveOrFail();
+            $vs= [];
+            if ($categoria_id) {
+                foreach($categoria_id as $id) {
+                    $vs[] = ['producto_id' => $Producto->id, 'categoria_id' => $id];
+                }
+                CategoriaProducto::insert($vs);
+            }
+        });
 
         return $Producto->id;
     }
@@ -84,21 +106,41 @@ class ProductosController extends Controller
      * @param  \App\Models\Producto  $Producto
      * @return \Illuminate\Http\Response
      */
-    public function update(ProductoUpdateRequest $request, Producto $Producto)
+    public function update(ProductoUpdateRequest $request, Producto $producto)
     {
         $data = $request->only([
             'sku',
             'nombre',
-            'categoria_id',
             'descripcion',
             'precio',
             'cantidad',
-            'estado',
+            'calificacion',
         ]);
-        $Producto->fill($data);
-        $Producto->saveOrFail();
+        $producto->sku = $data['sku'];
+        $producto->nombre = $data['nombre'];
+        $producto->descripcion = $data['descripcion'];
+        $producto->precio = $data['precio'];
+        $producto->cantidad = $data['cantidad'];
+        if ($producto->cantidad <= 0) {
+            $producto->estado = Producto::ESTADO_VALIDO[1];
+        } else {
+            $producto->estado = Producto::ESTADO_VALIDO[0];
+        }
+        $producto->calificacion = $data['calificacion'];
+        $categoria_id = $request->get('categoria_id');
+ 
+        DB::transaction(function () use ($producto, $categoria_id) {
+            $producto->saveOrFail();
+            $vs= [];
+            if ($categoria_id) {
+                foreach($categoria_id as $id) {
+                    $vs[] = ['producto_id' => $producto->id, 'categoria_id' => $id];
+                }
+                CategoriaProducto::insert($vs);
+            }
+        });
 
-        return $Producto->id;
+        return $producto->id;
     }
 
     /**

@@ -1,0 +1,92 @@
+[
+    {
+        "domain": null,
+        "method": "GET|HEAD",
+        "uri": "\/",
+        "name": null,
+        "action": "Closure",
+        "middleware": [
+            "web"
+        ]
+    },
+    {
+        "domain": null,
+        "method": "GET|HEAD",
+        "uri": "api\/producto",
+        "name": "producto.index",
+        "action": "App\\Http\\Controllers\\api\\ProductosController@index",
+        "middleware": [
+            "api"
+        ]
+    },
+    {
+        "domain": null,
+        "method": "POST",
+        "uri": "api\/producto",
+        "name": "producto.store",
+        "action": "App\\Http\\Controllers\\api\\ProductosController@store",
+        "middleware": [
+            "api"
+        ]
+    },
+    {
+        "domain": null,
+        "method": "GET|HEAD",
+        "uri": "api\/producto\/create",
+        "name": "producto.create",
+        "action": "App\\Http\\Controllers\\api\\ProductosController@create",
+        "middleware": [
+            "api"
+        ]
+    },
+    {
+        "domain": null,
+        "method": "GET|HEAD",
+        "uri": "api\/producto\/{producto}",
+        "name": "producto.show",
+        "action": "App\\Http\\Controllers\\api\\ProductosController@show",
+        "middleware": [
+            "api"
+        ]
+    },
+    {
+        "domain": null,
+        "method": "PUT|PATCH",
+        "uri": "api\/producto\/{producto}",
+        "name": "producto.update",
+        "action": "App\\Http\\Controllers\\api\\ProductosController@update",
+        "middleware": [
+            "api"
+        ]
+    },
+    {
+        "domain": null,
+        "method": "DELETE",
+        "uri": "api\/producto\/{producto}",
+        "name": "producto.destroy",
+        "action": "App\\Http\\Controllers\\api\\ProductosController@destroy",
+        "middleware": [
+            "api"
+        ]
+    },
+    {
+        "domain": null,
+        "method": "GET|HEAD",
+        "uri": "api\/producto\/{producto}\/edit",
+        "name": "producto.edit",
+        "action": "App\\Http\\Controllers\\api\\ProductosController@edit",
+        "middleware": [
+            "api"
+        ]
+    },
+    {
+        "domain": null,
+        "method": "GET|HEAD",
+        "uri": "sanctum\/csrf-cookie",
+        "name": null,
+        "action": "Laravel\\Sanctum\\Http\\Controllers\\CsrfCookieController@show",
+        "middleware": [
+            "web"
+        ]
+    }
+]

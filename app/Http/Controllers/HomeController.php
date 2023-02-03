@@ -57,6 +57,11 @@ class HomeController extends Controller
         $Producto->descripcion = $data['descripcion'];
         $Producto->precio = $data['precio'];
         $Producto->cantidad = $data['cantidad'];
+        if ($Producto->cantidad == 0) {
+            $Producto->estado = Producto::ESTADO_VALIDO[1];
+        } else {
+            $Producto->estado = Producto::ESTADO_VALIDO[0];
+        }
         $Producto->calificacion = $data['calificacion'];
         $categoria_id = $request->get('categoria_id');
  
@@ -120,6 +125,11 @@ class HomeController extends Controller
         $producto->descripcion = $data['descripcion'];
         $producto->precio = $data['precio'];
         $producto->cantidad = $data['cantidad'];
+        if ($producto->cantidad == 0) {
+            $producto->estado = Producto::ESTADO_VALIDO[1];
+        } else {
+            $producto->estado = Producto::ESTADO_VALIDO[0];
+        }
         $producto->calificacion = $data['calificacion'];
         $categoria_id = $request->get('categoria_id');
  

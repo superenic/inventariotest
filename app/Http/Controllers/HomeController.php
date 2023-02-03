@@ -1,11 +1,12 @@
 <?php
-
 namespace App\Http\Controllers;
 
 use App\Http\Requests\ProductoStoreRequest;
 use App\Models\Categoria;
+use App\Models\CategoriaProducto;
 use App\Models\Producto;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class HomeController extends Controller
 {
@@ -44,17 +45,28 @@ class HomeController extends Controller
         $data = $request->only([
             'sku',
             'nombre',
-            'categoria_id',
-            'descripción',
+            'descripcion',
             'precio',
             'cantidad',
-            'estado',
         ]);
         $Producto = new Producto();
-        $Producto->fill($data);
-        $Producto->saveOrFail();
+        $Producto->sku = $data['sku'];
+        $Producto->nombre = $data['nombre'];
+        $Producto->descripción = $data['descripcion'];
+        $Producto->precio = $data['precio'];
+        $Producto->cantidad = $data['cantidad'];
+        $categoria_id = $request->get('categoria_id');
+ 
+        DB::transaction(function () use ($Producto, $categoria_id) {
+            $Producto->saveOrFail();
+            $vs= [];
+            foreach($categoria_id as $id) {
+                $vs[] = ['producto_id' => $Producto->id, 'categoria_id' => $id];
+            }
+            CategoriaProducto::insert($vs);
+        });
 
-        Route()->redirect('productos.index');
+        return redirect()->back()->with('message', 'el registro fue salvado');
     }
 
     /**

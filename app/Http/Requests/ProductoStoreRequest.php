@@ -28,10 +28,11 @@ class ProductoStoreRequest extends FormRequest
         return [
             'sku' => ['required'],
             'nombre' => ['required'],
-            'descripción' => ['required'],
-            'precio' => ['required|decimal:8,2'],
-            'cantidad' => ['required|numeric'],
-            'estado' => ['required', Rule::in(Producto::ESTADO_VALIDO)],
+            'descripcion' => ['required'],
+            'precio' => ['required'],
+            'cantidad' => ['required'],
+            'categoria_id' => ['array'],
+            // 'estado' => ['required', Rule::in(Producto::ESTADO_VALIDO)],
         ];
     }
 }

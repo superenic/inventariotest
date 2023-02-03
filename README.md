@@ -5,8 +5,8 @@ por el postulante de acuerdo a los siguientes requerimientos.
 
 1. [x] Crear un nuevo proyecto en Laravel con el nombre de Inventario.
     * el folder `docker-containers` contiene el docker compose para virtualizar el servicio.
-2. [] Generar la migración para la tabla de productos utilizando los siguientes campos: id, sku, nombre, id de categoría, descripción, precio, cantidad, estado (con inventario o sin inventario), crear modelo, controlador y rutas (api restful).
-3. [] Generar la migración para la tabla de categorías de productos y crear una relación de N:N con la tabla de productos.
+2. [x] Generar la migración para la tabla de productos utilizando los siguientes campos: id, sku, nombre, id de categoría, descripción, precio, cantidad, estado (con inventario o sin inventario), crear modelo, controlador y rutas (api restful).
+3. [x] Generar la migración para la tabla de categorías de productos y crear una relación de N:N con la tabla de productos.
 4. [] Crear factory y seeder para crear 200 productos de prueba con evaluaciones de ejemplo y categorías.
 5. [] *Llenar la base de datos con registros de prueba para poder continuar con el ejercicio.
 6. [] Crear formulario de alta de producto

@@ -23,10 +23,11 @@ class ProductoFactory extends Factory
             'sku' => $this->faker->name(),
             'nombre' => $this->faker->name(),
             // 'categoria_id' => Categoria::select(['id'])->inRandomOrder()->first()->id,
-            'descripción' => $this->faker->name(),
+            'descripcion' => $this->faker->name(),
             'precio' => rand(1,50),
             'cantidad' => $cantidad,
             'estado' => $estado,
+            'calificacion' => rand(0,5),
         ];
     }
 }

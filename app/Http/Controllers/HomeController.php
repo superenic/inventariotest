@@ -2,6 +2,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\ProductoStoreRequest;
+use App\Http\Requests\ProductoUpdateRequest;
 use App\Models\Categoria;
 use App\Models\CategoriaProducto;
 use App\Models\Producto;
@@ -48,22 +49,26 @@ class HomeController extends Controller
             'descripcion',
             'precio',
             'cantidad',
+            'calificacion',
         ]);
         $Producto = new Producto();
         $Producto->sku = $data['sku'];
         $Producto->nombre = $data['nombre'];
-        $Producto->descripción = $data['descripcion'];
+        $Producto->descripcion = $data['descripcion'];
         $Producto->precio = $data['precio'];
         $Producto->cantidad = $data['cantidad'];
+        $Producto->calificacion = $data['calificacion'];
         $categoria_id = $request->get('categoria_id');
  
         DB::transaction(function () use ($Producto, $categoria_id) {
             $Producto->saveOrFail();
             $vs= [];
-            foreach($categoria_id as $id) {
-                $vs[] = ['producto_id' => $Producto->id, 'categoria_id' => $id];
+            if ($categoria_id) {
+                foreach($categoria_id as $id) {
+                    $vs[] = ['producto_id' => $Producto->id, 'categoria_id' => $id];
+                }
+                CategoriaProducto::insert($vs);
             }
-            CategoriaProducto::insert($vs);
         });
 
         return redirect()->back()->with('message', 'el registro fue salvado');
@@ -86,9 +91,11 @@ class HomeController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Producto $producto)
     {
-        //
+        $categorias = Categoria::select(['id', 'descripcion'])->get();
+
+        return view('productos.edit', compact('producto', 'categorias'));
     }
 
     /**
@@ -98,9 +105,36 @@ class HomeController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(ProductoUpdateRequest $request, Producto $producto)
     {
-        //
+        $data = $request->only([
+            'sku',
+            'nombre',
+            'descripcion',
+            'precio',
+            'cantidad',
+            'calificacion',
+        ]);
+        $producto->sku = $data['sku'];
+        $producto->nombre = $data['nombre'];
+        $producto->descripcion = $data['descripcion'];
+        $producto->precio = $data['precio'];
+        $producto->cantidad = $data['cantidad'];
+        $producto->calificacion = $data['calificacion'];
+        $categoria_id = $request->get('categoria_id');
+ 
+        DB::transaction(function () use ($producto, $categoria_id) {
+            $producto->saveOrFail();
+            $vs= [];
+            if ($categoria_id) {
+                foreach($categoria_id as $id) {
+                    $vs[] = ['producto_id' => $producto->id, 'categoria_id' => $id];
+                }
+                CategoriaProducto::insert($vs);
+            }
+        });
+
+        return redirect()->back()->with('message', 'el registro fue salvado');
     }
 
     /**

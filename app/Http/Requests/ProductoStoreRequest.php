@@ -32,6 +32,7 @@ class ProductoStoreRequest extends FormRequest
             'precio' => ['required'],
             'cantidad' => ['required'],
             'categoria_id' => ['array'],
+            'calificacion' => ['required'],
             // 'estado' => ['required', Rule::in(Producto::ESTADO_VALIDO)],
         ];
     }

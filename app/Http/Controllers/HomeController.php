@@ -57,7 +57,7 @@ class HomeController extends Controller
         $Producto->descripcion = $data['descripcion'];
         $Producto->precio = $data['precio'];
         $Producto->cantidad = $data['cantidad'];
-        if ($Producto->cantidad == 0) {
+        if ($Producto->cantidad <= 0) {
             $Producto->estado = Producto::ESTADO_VALIDO[1];
         } else {
             $Producto->estado = Producto::ESTADO_VALIDO[0];
@@ -125,7 +125,7 @@ class HomeController extends Controller
         $producto->descripcion = $data['descripcion'];
         $producto->precio = $data['precio'];
         $producto->cantidad = $data['cantidad'];
-        if ($producto->cantidad == 0) {
+        if ($producto->cantidad <= 0) {
             $producto->estado = Producto::ESTADO_VALIDO[1];
         } else {
             $producto->estado = Producto::ESTADO_VALIDO[0];
@@ -153,8 +153,10 @@ class HomeController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Producto $producto)
     {
-        //
+        $producto->delete();
+
+        return redirect()->back()->with('message', 'el registro fue eliminado');
     }
 }

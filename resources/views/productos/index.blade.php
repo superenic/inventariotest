@@ -5,6 +5,11 @@ use App\Models\Producto;
 @section('contenido')
 <div class="text-end"><a href="{{route('productos.create')}}" class="btn btn-success" style="margin: 20px;">nuevo</a></div>
 <div class="container">
+    @if(session()->has('message'))
+        <div class="alert alert-success">
+            {{ session()->get('message') }}
+        </div>
+    @endif
 @foreach($productos as $producto)
     <div class="row fondo-blanco">
         <div class="col text-center">
@@ -30,7 +35,11 @@ use App\Models\Producto;
                 <div class="alert alert-danger text-center">{{$producto->estado}}</div>
             @endif
             <a href="{{route('productos.edit', [$producto->id])}}" class="btn btn-info w-100 btn-large">editar</a>
-            <a href="{{route('productos.destroy', [$producto->id])}}" class="btn btn-danger w-100 btn-large">eliminar</a>
+            <form action="{{route('productos.destroy', [$producto->id])}}" method="POST">
+                @csrf
+                {{ method_field('DELETE') }}
+                <button class="btn btn-danger w-100 btn-large">eliminar</button>
+            </form>
         </div>
     </div>
 @endforeach

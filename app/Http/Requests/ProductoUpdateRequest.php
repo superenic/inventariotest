@@ -29,7 +29,7 @@ class ProductoUpdateRequest extends FormRequest
             'sku' => ['required'],
             'nombre' => ['required'],
             'categoria_id' => ['required'], // exists:producto,producto_id
-            'descripción' => ['required'],
+            'descripcion' => ['required'],
             'precio' => ['required|decimal:8,2'],
             'cantidad' => ['required|numeric'],
             'estado' => ['required', Rule::in(Producto::ESTADO_VALIDO)],

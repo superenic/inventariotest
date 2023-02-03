@@ -2061,6 +2061,29 @@ module.exports = {
 /***/ ((__unused_webpack_module, __unused_webpack_exports, __webpack_require__) => {
 
 __webpack_require__(/*! ./bootstrap */ "./resources/js/bootstrap.js");
+var axios = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
+window.addEventListener('load', function (event) {
+  var calificacioneSelect = document.querySelectorAll('select[name="calificacion"]');
+  Array.from(calificacioneSelect).forEach(function (item) {
+    item.addEventListener('change', function (e) {
+      var target = e.target;
+      var value = e.target.value;
+      var ruta = target.getAttribute('data-ruta');
+      var response = axios.put(ruta, {
+        calificacion: value
+      });
+      target.disabled = true;
+      response.then(function (res) {
+        return res.json;
+      })["catch"](function (error) {
+        alert('se encontro un error al actualiar la calificacion');
+      })["finally"](function () {
+        target.disabled = false;
+        alert('se cambio exitosamente');
+      });
+    });
+  });
+});
 
 /***/ }),
 

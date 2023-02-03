@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\ProductoStoreRequest;
 use App\Http\Requests\ProductoUpdateRequest;
+use App\Http\Requests\ProductoUpdateCalificaionRequest;
 
 class ProductosController extends Controller
 {
@@ -109,5 +110,13 @@ class ProductosController extends Controller
     public function destroy(Producto $Producto)
     {
         //
+    }
+
+    public function putCalificacion(Producto $producto, ProductoUpdateCalificaionRequest $request)
+    {
+        $producto->calificacion =  $request->get('calificacion');
+        $producto->saveOrFail();
+
+        return response()->noContent();
     }
 }

@@ -16,7 +16,7 @@ use App\Models\Producto;
             <div>{{$producto->estado}}</div>
 
             <label class="form-label">calidad</label>
-            <select class="form-select" aria-label="Default select example" name="calificacion">
+            <select class="form-select" aria-label="Default select example" name="calificacion" data-ruta="{{route("put.calificacion", [$producto->id])}}">
                 @for($i=1;$i<=5;$i++)
                     <option value="{{$i}}" {{$i == old('calificacion', $producto->calificacion)?'selected':''}}>estrellas - {{$i}}</option>
                 @endfor
@@ -36,5 +36,5 @@ use App\Models\Producto;
 @endforeach
 </div>
 
-
+<script src="{{mix('js/app.js')}}"></script>
 @endsection

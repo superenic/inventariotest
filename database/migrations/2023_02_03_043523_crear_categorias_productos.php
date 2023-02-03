@@ -1,8 +1,9 @@
 <?php
 
-use Illuminate\Database\Migrations\Migration;
-use Illuminate\Database\Schema\Blueprint;
+use App\Models\CategoriaProducto;
 use Illuminate\Support\Facades\Schema;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Database\Migrations\Migration;
 
 class CrearCategoriasProductos extends Migration
 {
@@ -13,7 +14,7 @@ class CrearCategoriasProductos extends Migration
      */
     public function up()
     {
-        Schema::create('categoria_producto', function (Blueprint $table) {
+        Schema::create(CategoriaProducto::NAME_TABLE, function (Blueprint $table) {
             $table->timestamps();        
             $table->bigInteger('categoria_id')->unsigned();
             $table->bigInteger('producto_id')->unsigned();
@@ -27,6 +28,6 @@ class CrearCategoriasProductos extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('categoria_producto');
+        Schema::dropIfExists(CategoriaProducto::NAME_TABLE);
     }
 }

@@ -19,11 +19,11 @@ class CrearProducto extends Migration
             $table->timestamps();
             $table->string('sku');
             $table->string('nombre');
-            $table->bigInteger('categoria_id')->unsigned();
+            $table->bigInteger('categoria_id')->unsigned()->default(null)->nullable();
             $table->string('descripción');
-            $table->decimal('precio',8,2);
-            $table->double('cantidad');
-            $table->enum('estado', Producto::ESTADO_VALIDO);
+            $table->decimal('precio',8,2)->default(null)->nullable();
+            $table->double('cantidad')->default(0)->nullable();
+            $table->enum('estado', Producto::ESTADO_VALIDO)->default(Producto::ESTADO_VALIDO[1]);
         });
     }
 

@@ -5314,10 +5314,36 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
 var _require = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm.js"),
-  href = _require.href;
+  reactive = _require.reactive;
+var calificaciones = [1, 2, 3, 4, 5];
+var axios = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
+var rutaGetProductos = rutas.index;
+var reactivo = reactive({
+  productos: []
+});
+reactivo.cargando = true;
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  setup: function setup() {
+    var options = {
+      Headers: {
+        Accept: "application/json"
+      }
+    };
+    axios.get(rutaGetProductos, options).then(function (r) {
+      var data = r.data;
+      reactivo.productos = data.map(function (producto) {
+        producto.rutaEditar = rutas.index + producto.id;
+        return producto;
+      });
+    })["finally"](function () {
+      reactivo.cargando = false;
+    });
+  },
   data: function data() {
-    return {};
+    return {
+      calificaciones: calificaciones,
+      reactivo: reactivo
+    };
   },
   mounted: function mounted() {}
 });
@@ -5339,24 +5365,71 @@ __webpack_require__.r(__webpack_exports__);
 var render = function render() {
   var _vm = this,
     _c = _vm._self._c;
-  return _vm._m(0);
+  return _c("div", [_c("div", {
+    staticClass: "row justify-content-center"
+  }, [_c("div", {
+    staticClass: "col-md-12"
+  }, [_c("div", {
+    staticClass: "card"
+  }, _vm._l(_vm.reactivo.productos, function (producto) {
+    return _c("div", {
+      key: producto.id,
+      staticClass: "card-body"
+    }, [_c("div", {
+      staticClass: "row fondo-blanco"
+    }, [_vm._m(0, true), _vm._v(" "), _c("div", {
+      staticClass: "col-6"
+    }, [_c("h2", [_vm._v(_vm._s(producto.nombre))]), _vm._v(" "), _c("div", [_vm._v("by Apple")]), _vm._v(" "), _c("div", [_vm._v(_vm._s(producto.estado))]), _vm._v(" "), _c("label", {
+      staticClass: "form-label"
+    }, [_vm._v("calidad")]), _vm._v(" "), _c("select", {
+      directives: [{
+        name: "model",
+        rawName: "v-model",
+        value: producto.calificacion,
+        expression: "producto.calificacion"
+      }],
+      staticClass: "form-select",
+      attrs: {
+        name: "calificacion"
+      },
+      on: {
+        change: function change($event) {
+          var $$selectedVal = Array.prototype.filter.call($event.target.options, function (o) {
+            return o.selected;
+          }).map(function (o) {
+            var val = "_value" in o ? o._value : o.value;
+            return val;
+          });
+          _vm.$set(producto, "calificacion", $event.target.multiple ? $$selectedVal : $$selectedVal[0]);
+        }
+      }
+    }, _vm._l(_vm.calificaciones, function (calificacion) {
+      return _c("option", {
+        key: calificacion,
+        domProps: {
+          value: calificacion
+        }
+      }, [_vm._v("\r\n                  " + _vm._s(calificacion) + " estrellas\r\n                ")]);
+    }), 0)]), _vm._v(" "), _c("div", {
+      staticClass: "col"
+    }, [_c("h3", {
+      staticClass: "text-center"
+    }, [_vm._v("$" + _vm._s(producto.precio))]), _vm._v(" "), producto.estado == "con inventario" ? _c("div", {
+      staticClass: "alert alert-success text-center"
+    }, [_vm._v(_vm._s(producto.estado))]) : _vm._e(), _vm._v(" "), producto.estado == "sin inventario" ? _c("div", {
+      staticClass: "alert alert-danger text-center"
+    }, [_vm._v(_vm._s(producto.estado))]) : _vm._e(), _vm._v(" "), _c("a", {
+      staticClass: "btn btn-info w-100 btn-large",
+      attrs: {
+        href: producto.rutaEditar
+      }
+    }, [_vm._v("editar")]), _vm._v(" "), _vm._m(1, true)])])]);
+  }), 0)])])]);
 };
 var staticRenderFns = [function () {
   var _vm = this,
     _c = _vm._self._c;
   return _c("div", {
-    staticClass: "row justify-content-center"
-  }, [_c("div", {
-    staticClass: "col-md-8"
-  }, [_c("div", {
-    staticClass: "card"
-  }, [_c("div", {
-    staticClass: "card-header"
-  }, [_vm._v("Example Component")]), _vm._v(" "), _c("div", {
-    staticClass: "card-body"
-  }, [_c("div", {
-    staticClass: "row fondo-blanco"
-  }, [_c("div", {
     staticClass: "col text-center"
   }, [_c("img", {
     attrs: {
@@ -5364,27 +5437,11 @@ var staticRenderFns = [function () {
       alt: "reloj",
       height: "200"
     }
-  })]), _vm._v(" "), _c("div", {
-    staticClass: "col-6"
-  }, [_c("h2", [_vm._v("nombre")]), _vm._v(" "), _c("div", [_vm._v("by Apple")]), _vm._v(" "), _c("div", [_vm._v("estado")]), _vm._v(" "), _c("label", {
-    staticClass: "form-label"
-  }, [_vm._v("calidad")]), _vm._v(" "), _c("select", {
-    staticClass: "form-select",
-    attrs: {
-      name: "calificacion"
-    }
-  })]), _vm._v(" "), _c("div", {
-    staticClass: "col"
-  }, [_c("h3", {
-    staticClass: "text-center"
-  }, [_vm._v("$10")]), _vm._v(" "), _c("div", {
-    staticClass: "alert alert-success text-center"
-  }, [_vm._v("estado")]), _vm._v(" "), _c("a", {
-    staticClass: "btn btn-info w-100 btn-large",
-    attrs: {
-      href: "#"
-    }
-  }, [_vm._v("editar")]), _vm._v(" "), _c("form", {
+  })]);
+}, function () {
+  var _vm = this,
+    _c = _vm._self._c;
+  return _c("form", {
     attrs: {
       action: "#",
       method: "POST"
@@ -5397,7 +5454,7 @@ var staticRenderFns = [function () {
     }
   }), _vm._v(" "), _c("button", {
     staticClass: "btn btn-danger w-100 btn-large"
-  }, [_vm._v("eliminar")])])])])])])])]);
+  }, [_vm._v("eliminar")])]);
 }];
 render._withStripped = true;
 

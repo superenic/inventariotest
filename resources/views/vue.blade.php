@@ -12,7 +12,7 @@
 <script>
     var rutas = <?php
         $rutas = [
-            'index' => route('vue.index'),
+            'index' => route('producto.index'),
             'create' => route('vue.create')
         ];
         echo json_encode($rutas);

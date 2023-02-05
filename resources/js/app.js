@@ -20,7 +20,7 @@ window.$ = window.jQuery = require("jquery");
 // const files = require.context('./', true, /\.vue$/i)
 // files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default))
 
-Vue.component('inventario-component', require('./components/ExampleComponent.vue').default);
+Vue.component('lista-component', require('./components/listacomponent.vue').default);
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to

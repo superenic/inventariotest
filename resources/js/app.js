@@ -21,6 +21,7 @@ window.$ = window.jQuery = require("jquery");
 // files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default))
 
 Vue.component('lista-component', require('./components/listacomponent.vue').default);
+Vue.component('create-component', require('./components/createcomponent.vue').default);
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to

@@ -14,7 +14,12 @@
               <div>{{producto.estado}}</div>
 
               <label class="form-label">calidad</label>
-              <select class="form-select" name="calificacion" v-model="producto.calificacion">
+              <select
+                :productId="producto.id"
+                @change="cambiarCalificacion"
+                class="form-select"
+                name="calificacion"
+                v-model="producto.calificacion">
                 <option
                   v-for="calificacion in calificaciones"
                   :value="calificacion"
@@ -49,6 +54,24 @@ const axios = require('axios');
 const rutaGetProductos = rutas.index;
 const reactivo = reactive({productos: []});
 reactivo.cargando =  true;
+function cambiarCalificacion(e) {
+  const target = e.target;
+  const value = e.target.value;
+  const productId = target.getAttribute("productId")
+  const ruta = rutas.index + '/' + productId;
+  const response = axios.put(ruta, { calificacion: value });
+  target.disabled = true;
+  response
+    .catch((error) => {
+      alert("se encontro un error al actualiar la calificacion");
+      console.error(error);
+    })
+    .finally(() => {
+      target.disabled = false;
+      alert("se cambio exitosamente");
+    });
+}
+
 export default {
   setup() {
     const options = {
@@ -70,6 +93,7 @@ export default {
     return {
       calificaciones,
       reactivo,
+      cambiarCalificacion
     };
   },
   mounted() {},

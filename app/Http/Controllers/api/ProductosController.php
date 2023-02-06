@@ -10,6 +10,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\ProductoStoreRequest;
 use App\Http\Requests\ProductoUpdateRequest;
 use App\Http\Requests\ProductoUpdateCalificaionRequest;
+use App\Models\Categoria;
 
 class ProductosController extends Controller
 {
@@ -149,9 +150,11 @@ class ProductosController extends Controller
      * @param  \App\Models\Producto  $Producto
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Producto $Producto)
+    public function destroy(Producto $producto)
     {
-        //
+        $producto->delete();
+
+        return response()->noContent();
     }
 
     public function putCalificacion(Producto $producto, ProductoUpdateCalificaionRequest $request)
@@ -160,5 +163,9 @@ class ProductosController extends Controller
         $producto->saveOrFail();
 
         return response()->noContent();
+    }
+
+    public function categorias() {
+        return Categoria::all();
     }
 }

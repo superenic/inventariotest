@@ -5425,13 +5425,16 @@ function enviarBorrar(e) {
   }
   var form = e.target;
   var enviador = new FormData(form);
-  var url = rutas.index + '/' + enviador.get('productoId');
+  var productoId = enviador.get('productoId');
+  var url = rutas.index + '/' + productoId;
   var data = {
     _method: enviador.get('_method')
   };
   axios.post(url, data).then(function (r) {
     alert('se ha borrado el registro');
-    window.location.replace(rutas.vueIndex);
+    reactivo.productos = reactivo.productos.filter(function (p) {
+      return p.id != productoId;
+    });
   })["catch"](function (error) {
     alert('se ha encontrado un error en la peticion');
     console.error(error);

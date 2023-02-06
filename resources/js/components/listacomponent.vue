@@ -67,14 +67,17 @@ function enviarBorrar(e)
   }
   const form = e.target;
   const enviador =  new FormData(form);
-  const url =  rutas.index + '/' +enviador.get('productoId') ;
+  const productoId = enviador.get('productoId');
+  const url =  rutas.index + '/' + productoId ;
   const data = {
     _method: enviador.get('_method'),
   };
   axios.post(url, data)
     .then(r => {
       alert('se ha borrado el registro');
-      window.location.replace(rutas.vueIndex);
+      reactivo.productos = reactivo.productos.filter(p => {
+        return p.id != productoId;
+      });
     })
     .catch(error => {
       alert('se ha encontrado un error en la peticion');

@@ -5338,12 +5338,6 @@ function alEnviar(e) {
   }, "categoria_id", Array.from(form.querySelectorAll('input:checked')).map(function (i) {
     return i.value;
   }));
-  var options = {
-    Headers: {
-      Accept: "application/json"
-    },
-    data: data
-  };
   axios.post(url, data).then(function (r) {
     alert('se ha guardado el registro');
     form.reset();
@@ -5385,6 +5379,25 @@ var reactivo = reactive({
   productos: []
 });
 reactivo.cargando = true;
+function enviarBorrar(e) {
+  e.preventDefault();
+  if (!confirm("Desea borrar el registro?")) {
+    return;
+  }
+  var form = e.target;
+  var enviador = new FormData(form);
+  var url = rutas.index + '/' + enviador.get('productoId');
+  var data = {
+    _method: enviador.get('_method')
+  };
+  axios.post(url, data).then(function (r) {
+    alert('se ha borrado el registro');
+    window.location.replace(rutas.vueIndex);
+  })["catch"](function (error) {
+    alert('se ha encontrado un error en la peticion');
+    console.error(error);
+  })["finally"](function () {});
+}
 function cambiarCalificacion(e) {
   var target = e.target;
   var value = e.target.value;
@@ -5412,7 +5425,7 @@ function cambiarCalificacion(e) {
     axios.get(rutaGetProductos, options).then(function (r) {
       var data = r.data;
       reactivo.productos = data.map(function (producto) {
-        producto.rutaEditar = rutas.index + producto.id;
+        producto.rutaEditar = rutas.vueIndex + '/' + producto.id + '/edit';
         return producto;
       });
     })["finally"](function () {
@@ -5424,7 +5437,8 @@ function cambiarCalificacion(e) {
       calificaciones: calificaciones,
       reactivo: reactivo,
       cambiarCalificacion: cambiarCalificacion,
-      rutas: window.rutas
+      rutas: window.rutas,
+      enviarBorrar: enviarBorrar
     };
   },
   mounted: function mounted() {}
@@ -5683,7 +5697,31 @@ var render = function render() {
       attrs: {
         href: producto.rutaEditar
       }
-    }, [_vm._v("editar")]), _vm._v(" "), _vm._m(1, true)])])]);
+    }, [_vm._v("editar")]), _vm._v(" "), _c("form", {
+      attrs: {
+        action: "#",
+        method: "POST"
+      },
+      on: {
+        submit: _vm.enviarBorrar
+      }
+    }, [_c("input", {
+      attrs: {
+        type: "hidden",
+        name: "_method",
+        value: "DELETE"
+      }
+    }), _vm._v(" "), _c("input", {
+      attrs: {
+        type: "hidden",
+        name: "productoId"
+      },
+      domProps: {
+        value: producto.id
+      }
+    }), _vm._v(" "), _c("button", {
+      staticClass: "btn btn-danger w-100 btn-large"
+    }, [_vm._v("eliminar")])])])])]);
   }), 0)])])]);
 };
 var staticRenderFns = [function () {
@@ -5698,23 +5736,6 @@ var staticRenderFns = [function () {
       height: "200"
     }
   })]);
-}, function () {
-  var _vm = this,
-    _c = _vm._self._c;
-  return _c("form", {
-    attrs: {
-      action: "#",
-      method: "POST"
-    }
-  }, [_c("input", {
-    attrs: {
-      type: "hidden",
-      name: "_method",
-      value: "DELETE"
-    }
-  }), _vm._v(" "), _c("button", {
-    staticClass: "btn btn-danger w-100 btn-large"
-  }, [_vm._v("eliminar")])]);
 }];
 render._withStripped = true;
 

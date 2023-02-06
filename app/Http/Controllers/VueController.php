@@ -17,9 +17,11 @@ class VueController extends Controller
         return view('vue.create');
     }
 
-    public function edit()
+    public function edit($productoId)
     {
-        return view('vue.edit');
+        $producto =  Producto::findOrfail($productoId);
+
+        return view('vue.edit', compact('producto'));
     }
 
     public function show($productoId)

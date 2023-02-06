@@ -63,12 +63,6 @@ function alEnviar(e) {
     calificacion: enviador.get('calificacion'),
     categoria_id: Array.from(form.querySelectorAll('input:checked')).map(i => i.value)
   };
-  const options = {
-        Headers: {
-            Accept: "application/json"
-        },
-        data,
-    };
   axios.post(url, data)
   .then(r => {
     alert('se ha guardado el registro');

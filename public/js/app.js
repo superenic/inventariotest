@@ -5677,7 +5677,7 @@ var render = function render() {
         _vm.$set(_vm.mockProducto, "cantidad", $event.target.value);
       }
     }
-  })]), _vm._v(" "), _c("ul", {
+  })]), _vm._v(" "), _c("h3", [_vm._v("Categorias")]), _vm._v(" "), _c("ul", {
     staticClass: "list-group",
     staticStyle: {
       overflow: "auto",
@@ -5688,37 +5688,12 @@ var render = function render() {
       key: ca.id,
       staticClass: "list-group-item"
     }, [_c("input", {
-      directives: [{
-        name: "model",
-        rawName: "v-model",
-        value: _vm.mockProducto.categoria_id,
-        expression: "mockProducto.categoria_id"
-      }],
       attrs: {
         type: "checkbox",
         name: "categoria_id[]"
       },
       domProps: {
-        value: ca.id,
-        checked: Array.isArray(_vm.mockProducto.categoria_id) ? _vm._i(_vm.mockProducto.categoria_id, ca.id) > -1 : _vm.mockProducto.categoria_id
-      },
-      on: {
-        change: function change($event) {
-          var $$a = _vm.mockProducto.categoria_id,
-            $$el = $event.target,
-            $$c = $$el.checked ? true : false;
-          if (Array.isArray($$a)) {
-            var $$v = ca.id,
-              $$i = _vm._i($$a, $$v);
-            if ($$el.checked) {
-              $$i < 0 && _vm.$set(_vm.mockProducto, "categoria_id", $$a.concat([$$v]));
-            } else {
-              $$i > -1 && _vm.$set(_vm.mockProducto, "categoria_id", $$a.slice(0, $$i).concat($$a.slice($$i + 1)));
-            }
-          } else {
-            _vm.$set(_vm.mockProducto, "categoria_id", $$c);
-          }
-        }
+        value: ca.id
       }
     }), _vm._v("\n        " + _vm._s(ca.descripcion) + " \n      ")]);
   }), 0)]), _vm._v(" "), _c("div", {

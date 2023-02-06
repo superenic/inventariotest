@@ -21,10 +21,11 @@
       <label class="form-label">cantidad</label>
       <input type="number" class="form-control" v-model="mockProducto.cantidad" name="cantidad" />
     </div>
+    <h3>Categorias</h3>
     <ul class="list-group" style="overflow: auto; height: 400px">
       <label>
         <li :key="ca.id" v-for="ca in categorias" class="list-group-item">
-          <input  type="checkbox" v-model="mockProducto.categoria_id" name="categoria_id[]" :value="ca.id"/>
+          <input  type="checkbox" name="categoria_id[]" :value="ca.id"/>
           {{ca.descripcion}} 
         </li>
       </label>

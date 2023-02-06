@@ -45,5 +45,5 @@ use App\Models\Producto;
 @endforeach
 </div>
 
-<script src="{{mix('js/app.js')}}"></script>
+<script src="{{mix('js/app2.js')}}"></script>
 @endsection

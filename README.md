@@ -17,3 +17,8 @@ por el postulante de acuerdo a los siguientes requerimientos.
 11. []  Realizar eliminación lógica
 
 > Puntos extra: Realizar pruebas unitarias del CRUD, Arquitectura escalable y mantenible, comentarios en código.
+
+
+## instalacion
+
+[guie](./documentarion/instalacion.md)

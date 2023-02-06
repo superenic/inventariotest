@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\VueController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -14,5 +15,11 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/',[HomeController::class, 'index']);
-Route::resource('/productos',HomeController::class);
+Route::get('/',[VueController::class,'index']);
+Route::resource('/vue',VueController::class)->only([
+    'index',
+    'show',
+    'create',
+    'edit'
+]);
+// Route::resource('/productos',HomeController::class);

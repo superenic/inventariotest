@@ -5320,13 +5320,32 @@ function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input ==
 var axios = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
 var calificaciones = [1, 2, 3, 4, 5];
 var categorias = window.categorias;
+var mockProducto = {
+  _method: null,
+  skue: null,
+  sku: null,
+  nombre: null,
+  descripcion: null,
+  precio: null,
+  cantidad: null,
+  categoria_id: [],
+  calificacion: null
+};
+if (typeof producto !== 'undefined') {
+  mockProducto = producto;
+}
 function alEnviar(e) {
   e.preventDefault;
   var form = e.target;
   var enviador = new FormData(form);
   var url = rutas.index;
+  var method = 'POST';
+  if (typeof producto !== 'undefined') {
+    method = 'PATCH';
+    url += '/' + producto.id;
+  }
   var data = _defineProperty({
-    _method: 'POST',
+    _method: method,
     skue: enviador.get('skue'),
     sku: enviador.get('sku'),
     nombre: enviador.get('nombre'),
@@ -5340,7 +5359,7 @@ function alEnviar(e) {
   }));
   axios.post(url, data).then(function (r) {
     alert('se ha guardado el registro');
-    form.reset();
+    if (typeof producto === 'undefined') form.reset();
   })["catch"](function (error) {
     alert('se ha encontrado un error en la peticion');
     console.error(error);
@@ -5352,8 +5371,17 @@ function alEnviar(e) {
     return {
       calificaciones: calificaciones,
       categorias: categorias,
-      alEnviar: alEnviar
+      alEnviar: alEnviar,
+      mockProducto: mockProducto
     };
+  },
+  mounted: function mounted() {
+    if ((typeof categoriaProducto === "undefined" ? "undefined" : _typeof(categoriaProducto)) !== undefined) {
+      categoriaProducto.forEach(function (v) {
+        var e = document.querySelector("input[type='checkbox'][value='" + v + "']");
+        if (e) e.checked = true;
+      });
+    }
   }
 });
 
@@ -5495,12 +5523,161 @@ var render = function render() {
       }
     }
   }, [_c("input", {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: _vm.mockProducto._method,
+      expression: "mockProducto._method"
+    }],
     attrs: {
       type: "hidden",
       name: "_method",
       value: "POST"
+    },
+    domProps: {
+      value: _vm.mockProducto._method
+    },
+    on: {
+      input: function input($event) {
+        if ($event.target.composing) return;
+        _vm.$set(_vm.mockProducto, "_method", $event.target.value);
+      }
     }
-  }), _vm._v(" "), _vm._m(0), _vm._v(" "), _vm._m(1), _vm._v(" "), _vm._m(2), _vm._v(" "), _vm._m(3), _vm._v(" "), _vm._m(4), _vm._v(" "), _c("ul", {
+  }), _vm._v(" "), _c("div", {
+    staticClass: "mb-3"
+  }, [_c("label", {
+    directives: [{
+      name: "modelmockProducto.",
+      rawName: "v-modelmockProducto.",
+      value: _vm.skue,
+      expression: "skue"
+    }],
+    staticClass: "form-label",
+    attrs: {
+      name: "skue"
+    }
+  }, [_vm._v("sku")]), _vm._v(" "), _c("input", {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: _vm.mockProducto.sku,
+      expression: "mockProducto.sku"
+    }],
+    staticClass: "form-control",
+    attrs: {
+      type: "text",
+      name: "sku"
+    },
+    domProps: {
+      value: _vm.mockProducto.sku
+    },
+    on: {
+      input: function input($event) {
+        if ($event.target.composing) return;
+        _vm.$set(_vm.mockProducto, "sku", $event.target.value);
+      }
+    }
+  })]), _vm._v(" "), _c("div", {
+    staticClass: "mb-3"
+  }, [_c("label", {
+    staticClass: "form-label"
+  }, [_vm._v("nombre")]), _vm._v(" "), _c("input", {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: _vm.mockProducto.nombre,
+      expression: "mockProducto.nombre"
+    }],
+    staticClass: "form-control",
+    attrs: {
+      type: "text",
+      name: "nombre"
+    },
+    domProps: {
+      value: _vm.mockProducto.nombre
+    },
+    on: {
+      input: function input($event) {
+        if ($event.target.composing) return;
+        _vm.$set(_vm.mockProducto, "nombre", $event.target.value);
+      }
+    }
+  })]), _vm._v(" "), _c("div", {
+    staticClass: "mb-3"
+  }, [_c("label", {
+    staticClass: "form-label"
+  }, [_vm._v("descripcion")]), _vm._v(" "), _c("input", {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: _vm.mockProducto.descripcion,
+      expression: "mockProducto.descripcion"
+    }],
+    staticClass: "form-control",
+    attrs: {
+      type: "text",
+      name: "descripcion"
+    },
+    domProps: {
+      value: _vm.mockProducto.descripcion
+    },
+    on: {
+      input: function input($event) {
+        if ($event.target.composing) return;
+        _vm.$set(_vm.mockProducto, "descripcion", $event.target.value);
+      }
+    }
+  })]), _vm._v(" "), _c("div", {
+    staticClass: "mb-3"
+  }, [_c("label", {
+    staticClass: "form-label"
+  }, [_vm._v("precio")]), _vm._v(" "), _c("input", {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: _vm.mockProducto.precio,
+      expression: "mockProducto.precio"
+    }],
+    staticClass: "form-control",
+    attrs: {
+      type: "number",
+      name: "precio"
+    },
+    domProps: {
+      value: _vm.mockProducto.precio
+    },
+    on: {
+      input: function input($event) {
+        if ($event.target.composing) return;
+        _vm.$set(_vm.mockProducto, "precio", $event.target.value);
+      }
+    }
+  })]), _vm._v(" "), _c("div", {
+    staticClass: "mb-3"
+  }, [_c("label", {
+    staticClass: "form-label"
+  }, [_vm._v("cantidad")]), _vm._v(" "), _c("input", {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: _vm.mockProducto.cantidad,
+      expression: "mockProducto.cantidad"
+    }],
+    staticClass: "form-control",
+    attrs: {
+      type: "number",
+      name: "cantidad"
+    },
+    domProps: {
+      value: _vm.mockProducto.cantidad
+    },
+    on: {
+      input: function input($event) {
+        if ($event.target.composing) return;
+        _vm.$set(_vm.mockProducto, "cantidad", $event.target.value);
+      }
+    }
+  })]), _vm._v(" "), _c("ul", {
     staticClass: "list-group",
     staticStyle: {
       overflow: "auto",
@@ -5511,12 +5688,37 @@ var render = function render() {
       key: ca.id,
       staticClass: "list-group-item"
     }, [_c("input", {
+      directives: [{
+        name: "model",
+        rawName: "v-model",
+        value: _vm.mockProducto.categoria_id,
+        expression: "mockProducto.categoria_id"
+      }],
       attrs: {
         type: "checkbox",
         name: "categoria_id[]"
       },
       domProps: {
-        value: ca.id
+        value: ca.id,
+        checked: Array.isArray(_vm.mockProducto.categoria_id) ? _vm._i(_vm.mockProducto.categoria_id, ca.id) > -1 : _vm.mockProducto.categoria_id
+      },
+      on: {
+        change: function change($event) {
+          var $$a = _vm.mockProducto.categoria_id,
+            $$el = $event.target,
+            $$c = $$el.checked ? true : false;
+          if (Array.isArray($$a)) {
+            var $$v = ca.id,
+              $$i = _vm._i($$a, $$v);
+            if ($$el.checked) {
+              $$i < 0 && _vm.$set(_vm.mockProducto, "categoria_id", $$a.concat([$$v]));
+            } else {
+              $$i > -1 && _vm.$set(_vm.mockProducto, "categoria_id", $$a.slice(0, $$i).concat($$a.slice($$i + 1)));
+            }
+          } else {
+            _vm.$set(_vm.mockProducto, "categoria_id", $$c);
+          }
+        }
       }
     }), _vm._v("\n        " + _vm._s(ca.descripcion) + " \n      ")]);
   }), 0)]), _vm._v(" "), _c("div", {
@@ -5524,10 +5726,27 @@ var render = function render() {
   }, [_c("label", {
     staticClass: "form-label"
   }, [_vm._v("calidad")]), _vm._v(" "), _c("select", {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: _vm.mockProducto.calificacion,
+      expression: "mockProducto.calificacion"
+    }],
     staticClass: "form-select",
     attrs: {
       "aria-label": "Default select example",
       name: "calificacion"
+    },
+    on: {
+      change: function change($event) {
+        var $$selectedVal = Array.prototype.filter.call($event.target.options, function (o) {
+          return o.selected;
+        }).map(function (o) {
+          var val = "_value" in o ? o._value : o.value;
+          return val;
+        });
+        _vm.$set(_vm.mockProducto, "calificacion", $event.target.multiple ? $$selectedVal : $$selectedVal[0]);
+      }
     }
   }, _vm._l(_vm.calificaciones, function (cal) {
     return _c("option", {
@@ -5540,80 +5759,7 @@ var render = function render() {
     staticClass: "btn btn-success"
   }, [_vm._v("enviar")])]);
 };
-var staticRenderFns = [function () {
-  var _vm = this,
-    _c = _vm._self._c;
-  return _c("div", {
-    staticClass: "mb-3"
-  }, [_c("label", {
-    staticClass: "form-label",
-    attrs: {
-      name: "skue"
-    }
-  }, [_vm._v("sku")]), _vm._v(" "), _c("input", {
-    staticClass: "form-control",
-    attrs: {
-      type: "text",
-      name: "sku"
-    }
-  })]);
-}, function () {
-  var _vm = this,
-    _c = _vm._self._c;
-  return _c("div", {
-    staticClass: "mb-3"
-  }, [_c("label", {
-    staticClass: "form-label"
-  }, [_vm._v("nombre")]), _vm._v(" "), _c("input", {
-    staticClass: "form-control",
-    attrs: {
-      type: "text",
-      name: "nombre"
-    }
-  })]);
-}, function () {
-  var _vm = this,
-    _c = _vm._self._c;
-  return _c("div", {
-    staticClass: "mb-3"
-  }, [_c("label", {
-    staticClass: "form-label"
-  }, [_vm._v("descripcion")]), _vm._v(" "), _c("input", {
-    staticClass: "form-control",
-    attrs: {
-      type: "text",
-      name: "descripcion"
-    }
-  })]);
-}, function () {
-  var _vm = this,
-    _c = _vm._self._c;
-  return _c("div", {
-    staticClass: "mb-3"
-  }, [_c("label", {
-    staticClass: "form-label"
-  }, [_vm._v("precio")]), _vm._v(" "), _c("input", {
-    staticClass: "form-control",
-    attrs: {
-      type: "number",
-      name: "precio"
-    }
-  })]);
-}, function () {
-  var _vm = this,
-    _c = _vm._self._c;
-  return _c("div", {
-    staticClass: "mb-3"
-  }, [_c("label", {
-    staticClass: "form-label"
-  }, [_vm._v("cantidad")]), _vm._v(" "), _c("input", {
-    staticClass: "form-control",
-    attrs: {
-      type: "number",
-      name: "cantidad"
-    }
-  })]);
-}];
+var staticRenderFns = [];
 render._withStripped = true;
 
 

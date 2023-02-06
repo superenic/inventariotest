@@ -9,7 +9,7 @@
               <img src="/images/r.jpeg" alt="reloj" height="200" />
             </div>
             <div class="col-6">
-              <h2>{{producto.nombre}}</h2>
+              <a :href="rutas.vueIndex+ '/' + producto.id"><h2>{{producto.nombre}}</h2></a>
               <div>by Apple</div>
               <div>{{producto.estado}}</div>
 
@@ -93,7 +93,8 @@ export default {
     return {
       calificaciones,
       reactivo,
-      cambiarCalificacion
+      cambiarCalificacion,
+      rutas: window.rutas
     };
   },
   mounted() {},

@@ -3,7 +3,12 @@
     <div class="row justify-content-center">
     <div class="col-md-12">
       <div class="card">
-        <div class="card-body" v-for="producto in reactivo.productos" :key="producto.id">
+        <div v-if="reactivo.cargando" class="text-center p-20">
+          <div class="spinner-border" role="status">
+            <span class="sr-only"></span>
+          </div>
+        </div>
+        <div v-show="!reactivo.cargando" class="card-body" v-for="producto in reactivo.productos" :key="producto.id">
           <div class="row fondo-blanco">
             <div class="col text-center">
               <img src="/images/r.jpeg" alt="reloj" height="200" />
@@ -53,8 +58,7 @@ const { reactive } = require("vue");
 const calificaciones = [1, 2, 3, 4, 5];
 const axios = require('axios');
 const rutaGetProductos = rutas.index;
-const reactivo = reactive({productos: []});
-reactivo.cargando =  true;
+const reactivo = reactive({productos: [], cargando:false});
 function enviarBorrar(e)
 {
   e.preventDefault();
@@ -104,6 +108,7 @@ export default {
             Accept: "application/json"
         }
     }
+    reactivo.cargando = true;
     axios.get(rutaGetProductos, options).then(r => {
         const {data} = r;
         reactivo.productos = data.map(producto => {

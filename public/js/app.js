@@ -5320,6 +5320,11 @@ function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input ==
 var axios = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
 var calificaciones = [1, 2, 3, 4, 5];
 var categorias = window.categorias;
+var _require = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm.js"),
+  reactive = _require.reactive;
+var enviando = reactive({
+  activo: false
+});
 var mockProducto = {
   _method: null,
   skue: null,
@@ -5357,13 +5362,18 @@ function alEnviar(e) {
   }, "categoria_id", Array.from(form.querySelectorAll('input:checked')).map(function (i) {
     return i.value;
   }));
+  enviando.activo = true;
   axios.post(url, data).then(function (r) {
     alert('se ha guardado el registro');
-    if (typeof producto === 'undefined') form.reset();
+    if (typeof producto === 'undefined') {
+      form.reset();
+    }
   })["catch"](function (error) {
     alert('se ha encontrado un error en la peticion');
     console.error(error);
-  })["finally"](function () {});
+  })["finally"](function () {
+    enviando.activo = false;
+  });
 }
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   setup: function setup() {},
@@ -5372,7 +5382,8 @@ function alEnviar(e) {
       calificaciones: calificaciones,
       categorias: categorias,
       alEnviar: alEnviar,
-      mockProducto: mockProducto
+      mockProducto: mockProducto,
+      enviando: enviando
     };
   },
   mounted: function mounted() {
@@ -5404,9 +5415,9 @@ var calificaciones = [1, 2, 3, 4, 5];
 var axios = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
 var rutaGetProductos = rutas.index;
 var reactivo = reactive({
-  productos: []
+  productos: [],
+  cargando: false
 });
-reactivo.cargando = true;
 function enviarBorrar(e) {
   e.preventDefault();
   if (!confirm("Desea borrar el registro?")) {
@@ -5450,6 +5461,7 @@ function cambiarCalificacion(e) {
         Accept: "application/json"
       }
     };
+    reactivo.cargando = true;
     axios.get(rutaGetProductos, options).then(function (r) {
       var data = r.data;
       reactivo.productos = data.map(function (producto) {
@@ -5731,7 +5743,10 @@ var render = function render() {
       }
     }, [_vm._v(_vm._s(cal) + " estrellas")]);
   }), 0)]), _vm._v(" "), _c("button", {
-    staticClass: "btn btn-success"
+    staticClass: "btn btn-success",
+    attrs: {
+      disabled: _vm.enviando.activo
+    }
   }, [_vm._v("enviar")])]);
 };
 var staticRenderFns = [];
@@ -5761,13 +5776,21 @@ var render = function render() {
     staticClass: "col-md-12"
   }, [_c("div", {
     staticClass: "card"
-  }, _vm._l(_vm.reactivo.productos, function (producto) {
+  }, [_vm.reactivo.cargando ? _c("div", {
+    staticClass: "text-center p-20"
+  }, [_vm._m(0)]) : _vm._e(), _vm._v(" "), _vm._l(_vm.reactivo.productos, function (producto) {
     return _c("div", {
+      directives: [{
+        name: "show",
+        rawName: "v-show",
+        value: !_vm.reactivo.cargando,
+        expression: "!reactivo.cargando"
+      }],
       key: producto.id,
       staticClass: "card-body"
     }, [_c("div", {
       staticClass: "row fondo-blanco"
-    }, [_vm._m(0, true), _vm._v(" "), _c("div", {
+    }, [_vm._m(1, true), _vm._v(" "), _c("div", {
       staticClass: "col-6"
     }, [_c("a", {
       attrs: {
@@ -5843,9 +5866,20 @@ var render = function render() {
     }), _vm._v(" "), _c("button", {
       staticClass: "btn btn-danger w-100 btn-large"
     }, [_vm._v("eliminar")])])])])]);
-  }), 0)])])]);
+  })], 2)])])]);
 };
 var staticRenderFns = [function () {
+  var _vm = this,
+    _c = _vm._self._c;
+  return _c("div", {
+    staticClass: "spinner-border",
+    attrs: {
+      role: "status"
+    }
+  }, [_c("span", {
+    staticClass: "sr-only"
+  })]);
+}, function () {
   var _vm = this,
     _c = _vm._self._c;
   return _c("div", {

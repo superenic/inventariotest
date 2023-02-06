@@ -40,13 +40,15 @@
       </select>
     </div>
 
-    <button class="btn btn-success">enviar</button>
+    <button class="btn btn-success" :disabled="enviando.activo">enviar</button>
   </form>
 </template>
 <script>
 const axios = require("axios");
 const calificaciones = [1,2,3,4,5];
 const categorias = window.categorias;
+const { reactive } = require("vue");
+let enviando = reactive({activo:false});
 let mockProducto = {
   _method: null,
   skue: null,
@@ -83,16 +85,19 @@ function alEnviar(e) {
     calificacion: enviador.get('calificacion'),
     categoria_id: Array.from(form.querySelectorAll('input:checked')).map(i => i.value),
   };
+  enviando.activo =  true;
   axios.post(url, data)
   .then(r => {
     alert('se ha guardado el registro');
-    if (typeof producto === 'undefined') form.reset();
+    if (typeof producto === 'undefined') {
+      form.reset();
+    }
   })
   .catch(error => {
     alert('se ha encontrado un error en la peticion');
     console.error(error);
   })
-  .finally(() => {});
+  .finally(() => {enviando.activo= false;});
 }
 export default {
   setup() {
@@ -103,7 +108,8 @@ export default {
       calificaciones,
       categorias,
       alEnviar,
-      mockProducto
+      mockProducto,
+      enviando
     };
   },
   mounted() {

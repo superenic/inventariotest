@@ -14,11 +14,12 @@ por el postulante de acuerdo a los siguientes requerimientos.
 8. [x] Vista de detalle de producto.
 9. [x] Crear funcionalidad para calificar productos de 1 a 5 estrellas (Un producto puede tener varias calificaciones)
 10. [x]  Funcionalidad para marcar un producto como sin inventario
-11. []  Realizar eliminación lógica
+11. [x]  Realizar eliminación lógica
 
 > Puntos extra: Realizar pruebas unitarias del CRUD, Arquitectura escalable y mantenible, comentarios en código.
 
 
 ## instalacion
 
-[guie](./documentarion/instalacion.md)
+* [guia de instalacion](./documentarion/instalacion.md)
+* [descripcion de la applicacion](./documentarion/readme.md)

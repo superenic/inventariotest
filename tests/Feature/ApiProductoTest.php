@@ -120,4 +120,25 @@ class ApiProductoTest extends TestCaseApiDecorator
             $response->assertStatus(200);
         }
     }
+
+    public function test_actualizar_un_cantidad_producto()
+    {
+        $producto = Producto::factory()->create();
+        $expected = $producto->cantidad + 1;
+        $data = [
+            "cantidad" => $expected,
+        ];
+        $ruta = route('producto.actualizarCantidad', [$producto->id]);
+        $response = $this
+            ->withHeaders(self::CABECERAS)
+            ->put($ruta);
+        $response->assertStatus(422);
+        $response = $this
+            ->withHeaders(self::CABECERAS)
+            ->put($ruta, $data);
+
+        $response->assertStatus(204);
+        $actual = Producto::find($producto->id)->cantidad;
+        $this->assertEquals($expected, $actual);
+    }
 }

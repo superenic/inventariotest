@@ -8,7 +8,7 @@
             <span class="sr-only"></span>
           </div>
         </div>
-        <div v-show="!reactivo.cargando" class="card-body" v-for="producto in reactivo.productos" :key="producto.id">
+        <div v-show="!reactivo.cargando" class="card-body" v-for="(producto, index) in reactivo.productos" :key="producto.id">
           <div class="row fondo-blanco">
             <div class="col text-center">
               <img src="/images/r.jpeg" alt="reloj" height="200" />
@@ -33,11 +33,13 @@
                   {{ calificacion }} estrellas
                 </option>
               </select>
+              <label>cantidad</label>
+              <contador-component :producto="reactivo.productos[index]"/>
             </div>
             <div class="col">
               <h3 class="text-center">${{producto.precio}}</h3>
-              <div v-if="producto.estado == 'con inventario'" class="alert alert-success text-center">{{producto.estado}}</div>
-              <div v-if="producto.estado == 'sin inventario'" class="alert alert-danger text-center">{{producto.estado}}</div>
+              <div v-if="producto.cantidad > 0" class="alert alert-success text-center">con inventario</div>
+              <div v-if="producto.cantidad < 1" class="alert alert-danger text-center">sin inventario</div>
               <a :href="producto.rutaEditar" class="btn btn-info w-100 btn-large">editar</a>
               <form action="#" method="POST" @submit="enviarBorrar">
                 <input type="hidden" name="_method" value="DELETE" />

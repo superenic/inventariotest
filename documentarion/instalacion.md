@@ -16,4 +16,6 @@ nombre de los contenedores `inventario` y `inventariodb`
 
 Copia el archivo `.env.example` y renombralo a `.env` en el mismo folder o simplemente renombralo a `.env`
 
+> si deseas ejecutar las pruebas unitarias sin entrar al contenedor `docker exec -ti inventario vendor/bin/phpunit`
+
 [regresar](../README.md)

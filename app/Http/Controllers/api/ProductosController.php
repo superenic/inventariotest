@@ -3,17 +3,32 @@
 namespace App\Http\Controllers\api;
 
 use App\Models\Producto;
+use App\Models\Categoria;
 use Illuminate\Http\Request;
 use App\Models\CategoriaProducto;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\ProductoStoreRequest;
 use App\Http\Requests\ProductoUpdateRequest;
+use App\Http\Requests\CambiarProductoCantidadRequest;
 use App\Http\Requests\ProductoUpdateCalificaionRequest;
-use App\Models\Categoria;
 
 class ProductosController extends Controller
 {
+    public function cambiarCantidad(Producto $producto, CambiarProductoCantidadRequest $request)
+    {
+        $cantidad = $request->get('cantidad');
+        $producto->cantidad = $cantidad;
+        if ($producto->cantidad <= 0) {
+            $producto->estado = Producto::ESTADO_VALIDO[1];
+        } else {
+            $producto->estado = Producto::ESTADO_VALIDO[0];
+        }
+        $producto->saveOrFail();
+
+        return response()->noContent();        
+    }
+
     /**
      * Display a listing of the resource.
      *

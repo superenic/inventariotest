@@ -20,4 +20,5 @@ use Illuminate\Support\Facades\Route;
 // });
 
 Route::resource('/producto', ProductosController::class);
+Route::put('/producto/cambiarCantidad/{producto}', [ProductosController::class,'cambiarCantidad'])->name('producto.actualizarCantidad');
 Route::put('/producto/{producto}', [ProductosController::class, 'putCalificacion'])->name('put.calificacion');

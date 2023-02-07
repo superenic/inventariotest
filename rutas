@@ -4,7 +4,7 @@
         "method": "GET|HEAD",
         "uri": "\/",
         "name": null,
-        "action": "Closure",
+        "action": "App\\Http\\Controllers\\VueController@index",
         "middleware": [
             "web"
         ]
@@ -71,6 +71,16 @@
     },
     {
         "domain": null,
+        "method": "PUT",
+        "uri": "api\/producto\/{producto}",
+        "name": "put.calificacion",
+        "action": "App\\Http\\Controllers\\api\\ProductosController@putCalificacion",
+        "middleware": [
+            "api"
+        ]
+    },
+    {
+        "domain": null,
         "method": "GET|HEAD",
         "uri": "api\/producto\/{producto}\/edit",
         "name": "producto.edit",
@@ -85,6 +95,46 @@
         "uri": "sanctum\/csrf-cookie",
         "name": null,
         "action": "Laravel\\Sanctum\\Http\\Controllers\\CsrfCookieController@show",
+        "middleware": [
+            "web"
+        ]
+    },
+    {
+        "domain": null,
+        "method": "GET|HEAD",
+        "uri": "vue",
+        "name": "vue.index",
+        "action": "App\\Http\\Controllers\\VueController@index",
+        "middleware": [
+            "web"
+        ]
+    },
+    {
+        "domain": null,
+        "method": "GET|HEAD",
+        "uri": "vue\/create",
+        "name": "vue.create",
+        "action": "App\\Http\\Controllers\\VueController@create",
+        "middleware": [
+            "web"
+        ]
+    },
+    {
+        "domain": null,
+        "method": "GET|HEAD",
+        "uri": "vue\/{vue}",
+        "name": "vue.show",
+        "action": "App\\Http\\Controllers\\VueController@show",
+        "middleware": [
+            "web"
+        ]
+    },
+    {
+        "domain": null,
+        "method": "GET|HEAD",
+        "uri": "vue\/{vue}\/edit",
+        "name": "vue.edit",
+        "action": "App\\Http\\Controllers\\VueController@edit",
         "middleware": [
             "web"
         ]

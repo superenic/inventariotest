@@ -13,6 +13,8 @@ En la pantalla de inicio vera la lista de productos creados y en la parte superi
 * ver los detalles del producto en en link del nombre
 * editar el producto
 * eliminar el producto
+* cambiar la cantidad de producto
+    * por concecuencia el estado del producto cambiar a `con inventario`
 *  cambiar las estrellas del producto
     * el estado del producto esta sujeto a la cantida disponible si la cantidad es 0 este se pondra como sin inventario.
 ## pantalla de detalle
